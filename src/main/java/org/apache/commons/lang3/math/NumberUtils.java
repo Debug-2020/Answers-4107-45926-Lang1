@@ -463,17 +463,15 @@ public class NumberUtils {
                 break;
             }
         }
-        String cpyStr = str;
         if (pfxLen > 0) { // we have a hex number
-            cpyStr = cpyStr.substring(pfxLen);
-            while (cpyStr.startsWith("0")) {
-                cpyStr = cpyStr.substring(1);
-            }
-            final int hexDigits = cpyStr.length();
-            if (hexDigits > 16 || (hexDigits == 16 && cpyStr.charAt(0) >= '8')) { // too many for Long
+            final int hexDigits = str.length() - pfxLen;
+            if (hexDigits > 16) { // too many for Long
                 return createBigInteger(str);
             }
-            if (hexDigits > 8 || (hexDigits == 8 && cpyStr.charAt(0) >= '8')) { // too many for an int
+            System.out.print(str);
+            System.out.print(hexDigits);
+
+            if (hexDigits >= 4 || str.charAt(str.length()-1) == 'L'||str.charAt(str.length()-1) == 'l') { // too many for an int
                 return createLong(str);
             }
             return createInteger(str);
